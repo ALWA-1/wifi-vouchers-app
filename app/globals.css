@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+@layer base {
+  body {
+    background-color: #f8fafc;
+    color: #0f172a;
+  }
+}/* أضف هذا في نهاية ملف globals.css */
+@layer utilities {
+  .animate-marquee-rtl {
+    display: inline-flex;
+    animation: marquee-rtl 30s linear infinite;
+  }
+
+  @keyframes marquee-rtl {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(50%); /* يتحرك لليمين لأن الموقع RTL */
+    }
+  }
+}
+/* Custom Animations for the Website */
+@layer utilities {
+  .animate-fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 1s ease-out forwards;
+    opacity: 0;
+  }
+
+  /* تأخير الأنيميشن للعناصر المتتالية */
+  .delay-100 { animation-delay: 100ms; }
+  .delay-200 { animation-delay: 200ms; }
+  .delay-300 { animation-delay: 300ms; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
