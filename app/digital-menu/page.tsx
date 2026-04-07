@@ -116,9 +116,9 @@ export default function VouchersServicePage() {
                 </div>
             </section>
 
-            {/* 2. النصائح التسويقية */}
+{/* 2. النصائح التسويقية (تصميم النقاط الاحترافي) */}
             <section className="py-20 bg-white">
-                <div className="max-w-7xl mx-auto px-6 lg:px-8">
+                <div className="max-w-5xl mx-auto px-6 lg:px-8">
                     <ScrollReveal>
                         <div className="text-center mb-16">
                             <span className="text-[#E47B15] font-semibold tracking-wider text-sm">{landingData.tips_subtitle || 'نصائح لرواد الأعمال'}</span>
@@ -126,25 +126,28 @@ export default function VouchersServicePage() {
                             <div className="w-16 h-1 bg-[#F08A24] rounded-full mt-4 mx-auto"></div>
                         </div>
                     </ScrollReveal>
-                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {tips.map((tip, index) => {
-                            const colorClass = tipColors[index % tipColors.length];
-                            return (
-                                <ScrollReveal key={tip.id} delay={`delay-${(index + 1) * 100}`}>
-                                    <div className="bg-[#f8f9fa] p-8 rounded-2xl border border-gray-100 hover:border-[#E47B15]/30 transition-all hover:shadow-lg h-full flex flex-col items-start">
-                                        <div className={`w-14 h-14 rounded-full ${colorClass} flex items-center justify-center mb-6 overflow-hidden`}>
-                                            {tip.icon_url ? (
-                                                <img src={tip.icon_url} alt={tip.title} className="w-8 h-8 object-contain" style={{ filter: 'brightness(0) currentColor' }} />
-                                            ) : (
-                                                <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                            )}
+                    
+                    {/* المربع الذي يحتوي على النقاط */}
+                    <div className="bg-[#f8f9fa] rounded-3xl p-8 md:p-12 border border-gray-100 shadow-sm">
+                        <ul className="grid md:grid-cols-2 gap-x-12 gap-y-8">
+                            {tips.map((tip, index) => (
+                                <ScrollReveal key={tip.id} delay={`delay-${(index % 4) * 100}`}>
+                                    <li className="flex items-start gap-4 group">
+                                        {/* علامة الصح الاحترافية */}
+                                        <div className="mt-1 w-7 h-7 rounded-full bg-orange-50 border border-orange-100 flex items-center justify-center shrink-0 group-hover:bg-[#E47B15] transition-colors duration-300">
+                                            <svg className="w-4 h-4 text-[#E47B15] group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                                            </svg>
                                         </div>
-                                        <h3 className="text-xl font-bold text-[#0F172A] mb-3">{tip.title}</h3>
-                                        <p className="text-gray-600 font-light text-sm leading-relaxed">{tip.description}</p>
-                                    </div>
+                                        {/* النص */}
+                                        <span className="text-gray-700 text-lg leading-relaxed font-medium">
+                                            {/* هيعرض العنوان أو الوصف بناءً على اللي هتكتبه في الداشبورد */}
+                                            {tip.title || tip.description}
+                                        </span>
+                                    </li>
                                 </ScrollReveal>
-                            );
-                        })}
+                            ))}
+                        </ul>
                     </div>
                 </div>
             </section>
