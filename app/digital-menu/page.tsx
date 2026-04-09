@@ -21,8 +21,8 @@ export default function VouchersServicePage() {
     const [isLoading, setIsLoading] = useState(true);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [userName, setUserName] = useState(''); // تم التعديل للاسم
-    const [userMessage, setUserMessage] = useState(''); // تم التعديل للرسالة
+    const [userName, setUserName] = useState(''); 
+    const [userMessage, setUserMessage] = useState(''); 
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -66,7 +66,10 @@ export default function VouchersServicePage() {
                 const message = `📌 *طلب جديد - خدمة كروت الإنترنت*\n━━━━━━━━━━━━━━━━━\nمرحباً، أنا *${userName}*.\nأرغب في الاستفسار عن تصميم كروت إنترنت خاصة بكياني.\n\n💬 *الرسالة:*\n${userMessage || 'أرغب في معرفة المزيد من التفاصيل.'}\n━━━━━━━━━━━━━━━━━\n🌐 مرسل من صفحة كروت الإنترنت.`;
 
                 setIsSubmitted(true);
-                window.open(`https://wa.me/${adminWhatsApp}?text=${encodeURIComponent(message)}`, '_blank');
+                
+                // ✅ الحل السحري لمشكلة الموبايل: استخدام location.href بدلاً من window.open
+                window.location.href = `https://wa.me/${adminWhatsApp}?text=${encodeURIComponent(message)}`;
+                
             } catch (error) {
                 console.error(error);
             } finally {
@@ -116,7 +119,7 @@ export default function VouchersServicePage() {
                 </div>
             </section>
 
-{/* 2. النصائح التسويقية (تصميم النقاط الاحترافي) */}
+            {/* 2. النصائح التسويقية (تصميم النقاط الاحترافي) */}
             <section className="py-20 bg-white">
                 <div className="max-w-5xl mx-auto px-6 lg:px-8">
                     <ScrollReveal>
@@ -127,21 +130,17 @@ export default function VouchersServicePage() {
                         </div>
                     </ScrollReveal>
                     
-                    {/* المربع الذي يحتوي على النقاط */}
                     <div className="bg-[#f8f9fa] rounded-3xl p-8 md:p-12 border border-gray-100 shadow-sm">
                         <ul className="grid md:grid-cols-2 gap-x-12 gap-y-8">
                             {tips.map((tip, index) => (
                                 <ScrollReveal key={tip.id} delay={`delay-${(index % 4) * 100}`}>
                                     <li className="flex items-start gap-4 group">
-                                        {/* علامة الصح الاحترافية */}
                                         <div className="mt-1 w-7 h-7 rounded-full bg-orange-50 border border-orange-100 flex items-center justify-center shrink-0 group-hover:bg-[#E47B15] transition-colors duration-300">
                                             <svg className="w-4 h-4 text-[#E47B15] group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                                             </svg>
                                         </div>
-                                        {/* النص */}
                                         <span className="text-gray-700 text-lg leading-relaxed font-medium">
-                                            {/* هيعرض العنوان أو الوصف بناءً على اللي هتكتبه في الداشبورد */}
                                             {tip.title || tip.description}
                                         </span>
                                     </li>
@@ -271,10 +270,25 @@ export default function VouchersServicePage() {
                     </div>
 
                     {/* الجزء الأيسر: معلومات التواصل المباشر */}
-                    <div className="w-full md:w-1/2 bg-[#fafafa] p-8 md:p-12 border-t md:border-t-0 md:border-r border-gray-100">
+                    <div className="w-full md:w-1/2 bg-[#fafafa] p-8 md:p-12 border-t md:border-t-0 md:border-r border-gray-100 flex flex-col justify-center">
                       <h3 className="text-xl font-bold text-[#0F172A] mb-6">أو تواصل معنا مباشرة</h3>
+                      
                       <div className="space-y-4">
-                        {settings.whatsapp_number && (
+                        {/* الاتصال الهاتفي */}
+                        {settings?.phone_number && (
+                          <a href={`tel:${settings.phone_number}`} className="flex items-center gap-4 bg-white p-4 rounded-xl border border-gray-100 hover:border-[#E47B15] hover:shadow-md transition-all group">
+                            <div className="w-12 h-12 bg-orange-50 text-[#E47B15] rounded-full flex items-center justify-center group-hover:bg-[#E47B15] group-hover:text-white transition-colors">
+                              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                            </div>
+                            <div>
+                              <p className="text-xs text-gray-500 font-bold mb-1">اتصل بنا هاتفياً</p>
+                              <p className="text-[#0F172A] font-bold" dir="ltr">{settings.phone_number}</p>
+                            </div>
+                          </a>
+                        )}
+
+                        {/* الواتساب */}
+                        {settings?.whatsapp_number && (
                           <a href={`https://wa.me/${settings.whatsapp_number.replace(/[^0-9]/g, '')}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 bg-white p-4 rounded-xl border border-gray-100 hover:border-green-500 hover:shadow-md transition-all group">
                             <div className="w-12 h-12 bg-green-50 text-green-500 rounded-full flex items-center justify-center group-hover:bg-green-500 group-hover:text-white transition-colors">
                               <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
@@ -285,12 +299,17 @@ export default function VouchersServicePage() {
                             </div>
                           </a>
                         )}
-                        {settings.facebook_url && (
+
+                        {/* الفيسبوك */}
+                        {settings?.facebook_url && (
                           <a href={settings.facebook_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 bg-white p-4 rounded-xl border border-gray-100 hover:border-blue-500 hover:shadow-md transition-all group">
                             <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors">
                               <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                             </div>
-                            <div><p className="text-xs text-gray-500 font-bold mb-1">فيسبوك</p><p className="text-[#0F172A] font-bold">زيارة الصفحة</p></div>
+                            <div>
+                              <p className="text-xs text-gray-500 font-bold mb-1">صفحتنا على فيسبوك</p>
+                              <p className="text-[#0F172A] font-bold">زيارة الصفحة</p>
+                            </div>
                           </a>
                         )}
                       </div>
@@ -311,7 +330,6 @@ export default function VouchersServicePage() {
                     </div>
                     <h3 className="text-xl font-bold text-[#0F172A] mb-2">تم استلام طلبك بنجاح!</h3>
                     <p className="text-gray-500 text-sm mb-6">سيتم توجيهك الآن للمحادثة عبر الواتساب لتكملة التفاصيل.</p>
-                    <button onClick={closeModal} className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl py-3.5 font-bold transition-all">إغلاق</button>
                   </div>
                 </div>
             )}
