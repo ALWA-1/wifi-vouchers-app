@@ -63,7 +63,7 @@ export default function Navbar() {
                         <Link href="/#features" onClick={closeMenu} className="hover:text-[#F08A24] transition-colors border-b border-white/10 pb-3">مميزاتنا</Link>
                         <Link href="/#clients" onClick={closeMenu} className="hover:text-[#F08A24] transition-colors border-b border-white/10 pb-3">عملائنا</Link>
                         <Link href="/packages" onClick={closeMenu} className="hover:text-[#F08A24] transition-colors border-b border-white/10 pb-3">الباقات والأسعار</Link>
-                        <Link href="/digital-menu" onClick={closeMenu} className="hover:text-[#F08A24] transition-colors border-b border-white/10 pb-3">المنيو الرقمي</Link>
+                        <Link href="/digital-menu" onClick={closeMenu} className="hover:text-[#F08A24] transition-colors border-b border-white/10 pb-3">كروت  الانترنت</Link>
                         <Link href="/customize" onClick={closeMenu} className="bg-[#E47B15] text-white py-3 rounded-xl font-bold mt-4 shadow-lg">طلب تسعيرة الآن</Link>
                     </nav>
                 </div>
