@@ -60,8 +60,8 @@ export default function Home() {
       setUserName('');
       setUserMessage('');
       
-      // 4. التحويل مباشرة لمحادثة الواتساب
-      window.open(`https://wa.me/${adminWhatsApp}?text=${encodeURIComponent(message)}`, '_blank');
+      // 4. التحويل مباشرة لمحادثة الواتساب (التعديل تم هنا لحل مشكلة الموبايل)
+      window.location.href = `https://wa.me/${adminWhatsApp}?text=${encodeURIComponent(message)}`;
     } catch (error) {
       console.error(error);
     } finally {
